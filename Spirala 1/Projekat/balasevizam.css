@@ -1,0 +1,88 @@
+body {
+	margin: 0 auto;
+	padding: 0;
+	background-color: black;
+}
+
+#okvir {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+#meni {
+	width: 1000px;
+	margin: 0px auto;
+	margin-left: 0;
+	margin-right: 0;
+	float: left;
+}
+
+nav {
+	height: 42px;
+	background-color: gray;
+	margin: 0 auto;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+nav ul li a{
+	float: left;
+	display: inline-block;
+	text-decoration: none;
+	color: white;
+	padding: 0px 20px;
+	text-align: center;
+	margin: 0 auto;
+	line-height: 42px;
+}
+
+nav ul li a:hover {
+	background-color: white;
+	color: gray;
+}
+
+nav ul li a.aktivni {
+	background-color: white;
+	color: gray;
+}
+
+@media screen and (min-width:1000px) {
+	nav ul li a {
+		font-size: 20.28px;
+	}
+}
+@media screen and (max-width:999px) {
+	#okvir {
+		width: 100%;
+	}
+	
+	#meni {
+		width: 100%;
+	}
+	
+	img {
+		width: 100%;
+	}
+	nav ul li a {
+		font-size: 1.36vw;
+	}
+}
+
+@media screen and (max-width:640px) {
+	#okvir {
+		width: 100%;
+	}
+	
+	#meni {
+		width: 100%;
+	}
+	
+	img {
+		width: 100%;
+	}
+}
