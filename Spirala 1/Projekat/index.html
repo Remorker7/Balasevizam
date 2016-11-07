@@ -3,14 +3,15 @@
 <head>
 	<title> Balaševizam - Za sanjare, male blesane, noći besane... </title>
 	<link type = "text/css" rel = "stylesheet" href = "balasevizam.css"/>
-	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0"; charset="utf-8">
+	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+	<meta charset = "utf-8">
 </head>
 <body>
-	<div id = "okvir">
-		<div id = "banner">
-			<img src = "banner.jpg"/>
+	<div class = "okvir">
+		<div class = "banner">
+			<img src = "banner.jpg" alt = "Đorđe Balašević"/>
 		</div>
-		<div id = "meni">
+		<div class = "meni">
 			<nav>
 				<ul>
 					<li><a href = "index.html" class = "aktivni">POČETNA</a></li>
@@ -20,8 +21,76 @@
 					<li><a href = "maliBalasevici.html">MALI BALAŠEVIĆI</a></li>
 					<li><a href = "kontakt.html">KONTAKT</a></li>
 				</ul>
-				<p></p>
 			</nav>
+		</div>
+		<div class = "sadrzaj-pocetna">
+			<div class = "top-slike">
+				<p class = "feed">TOP 3 citata ovog mjeseca</p>
+				<img src = "white.jpg" alt = "Slika 1"/>
+				<img src = "white.jpg" alt = "Slika 2"/>
+				<img src = "white.jpg" alt = "Slika 3"/>
+			</div>
+			<div class = "top-pjesme">
+				<table class = "playlista">
+					<caption>TOP 5 - najbolja playlista mjeseca</caption>
+					<tr>
+						<th>#</th>
+						<th>IZVOĐAČ</th>
+						<th>PJESMA</th>
+					</tr>
+					<tr>
+						<td>1.</td>
+						<td>Đorđe Balašević</td>
+						<td>Menuet</td>
+					</tr>
+					<tr>
+						<td>2.</td>
+						<td>Đorđe Balašević</td>
+						<td>Remorker</td>
+					</tr>
+					<tr>
+						<td>3.</td>
+						<td>Coldplay</td>
+						<td>Yellow</td>
+					</tr>
+					<tr>
+						<td>4.</td>
+						<td>The Rolling Stones</td>
+						<td>As tears go by</td>
+					</tr>
+					<tr>
+						<td>5.</td>
+						<td>Miladin Šobić</td>
+						<td>Od druga do druga</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class = "pjesma">
+			<p class = "feed">Predložite vašu pjesmu za ovaj mjesec</p>
+			<form class = "forma-e" action = "index.html" method = "post" enctype = "text/plain">
+				<table>
+					<tr>
+						<td>Izvođač: </td>
+						<td><input type = "text" name = "izvođač" class = "unos"></td>
+					</tr>
+					<tr>
+						<td>Pjesma: </td>
+						<td><input type = "text" name = "pjesma" class = "unos"></td>
+					</tr>
+					<tr>
+						<td>Mjesec: </td>
+						<td><input type = "month" name = "mjesec" class = "unos"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class = "desno"><input type = "submit" value = "Pošalji"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class = "footer">
+			<p>Copyright &copy; Selmir Hasanović (remorker7), 2016. godina</p>
 		</div>
 	</div>
 </body>
