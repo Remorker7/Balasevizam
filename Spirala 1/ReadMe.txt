@@ -1,14 +1,14 @@
 I - Šta je uraðeno?
 a) Napravljena skica za svaku od podstranica koristeæi Photoshop. Nisam previše pažnje posvetio detaljnom izgledu elemenata na skici (dosta elemenata koji bi trebali biti jednaki na napravljenoj web stranici se malo razlikuju u dimenzijama na skici), ali smatram da skica otprilike treba da pokaže kako smo to zamislili da naša web stranica izgleda, a da je pri izradi stranice moguæe neko eventualno odstupanje, tj. pedantnija organizacija elemenata. Skice se nalaze u odvojenom folderu unutar foldera "spirala 1".
-b) Sve stranice su responzivne, bez obzira na velièinu i širinu displeja na kojem se prikazuju.
+b) Sve stranice su responzivne, bez obzira na velièinu i širinu displeja na kojem se prikazuju (pokušao sam napraviti i za displeje èija je širina manja od 200px, mislim da sam uspio, mada ne izgleda baš lijepo).
 c) Napravljen je izgled i za mobilne ureðaje tako da se stranica bez ikakvih problema prikazuje na mobitelu (testirao sam na svom mobitelu u portrait i landscape orijentacijama). Skice se nalaze u odvojenom folderu unutar foldera "spirala 1".
-d) Napravio sam tri forme, jednu na poèetnoj stranici i dvije na podstranici kontakt.html. (trenutno forme ne mogu vršiti funkcionalnosti koje  bi trebale, jer je potrebno poznavanje php-a i javascript-a). Potrudio sam se da forme ne bude proste, nego da iskoristim što više elemenata koje smo uèili.
+d) Napravio sam tri forme, jednu na poèetnoj stranici i dvije na podstranici kontakt.html (trenutno forme ne mogu vršiti funkcionalnosti koje  bi trebale, jer je potrebno malo bolje poznavanje php-a i javascript-a). Potrudio sam se da forme ne bude proste, nego da iskoristim što više elemenata koje smo uèili. Na jednoj formi koristio sam element "month" koji nije podržan u nekim starijim browserima, ali mislim da to nije problem pošto se u tim browserima element pretvori u obièni input za tekst, što isto tako može poslužiti.
 e) Kreirao sam meni koji je vidljiv na svim podstranicama. Na veæim ekranima se displej uvijek prikazuje tako da su stavke poredane jedna do druge, dok se na manjim ekranima (širine manje od 540 px) stavke prikazuju jedna ispod druge.
 f) Svi elementi na stranici su poravnati, nema glitcheva, interfejs stranice sam pravio po preporukama za dobar dizajn (preporuke profesorice na ovome predmetu, preporuke koje smo dobili na drugim predmetima koje slušam, internet literatura).
 Napomene - sve ispoštovane.
 
 II - Šta nije uraðeno?
-Nisam napravio stranice potpuno responzivne za displeje koji imaju širinu manju od 200px (mada sam se potrudio da i to uradim, ali malo je teže sa formama i tabelama, jer postojanje redova i kolona te nekih elemenata postaje besmisleno na tako malim ekranima). Mislim da nema mobitela koji bi mogli imati manju širinu, a to sam provjerio i na sljedeæoj stranici: http://viewportsizes.com/, tako da se nadam da ovo neæe predstavljati problem.
+/
 
 III - Bug-ovi koje ste primijetili ali niste stigli ispraviti, a znate rješenje (opis rješenja)
 /

@@ -94,11 +94,10 @@ nav ul li a.aktivni {
 	color: white;
 	margin: 0px 0px 5px 0px;
 	padding-top: 5px;
-	
 }
 
-.pjesma p {
-	margin-bottom: 0px;
+.najbolja-pjesma {
+	font-size: 15px;
 }
 
 .sadrzaj-pocetna p, .sadrzaj-balasgram p {
@@ -138,17 +137,13 @@ nav ul li a.aktivni {
 	border: 1px solid white;
 }
 
-.forma-e {
+
+.ocjena-str, .najbolja-pjesma, #viber-kontakt {
 	color: white;
 }
 
-.feed {
-	color: white;
+.ocjena-str p {
 	text-align: center;
-}
-
-#viber-kontakt {
-	color: white;
 }
 
 figure {
@@ -196,19 +191,19 @@ figure figcaption {
 		width: 90%;
 	}
 	
-	.forma-e, .feed {
-		font-size: 15px;
+	.ocjena-str, .footer, .najbolja-pjesma, .playlista, .citat-naslov, .citati {
+		font-size: 12px;
+	}
+	
+	.email, .ocjena-stranice {
+		 margin: 0 auto;
+		 width: 65%;
 	}
 }
 
 @media screen and (max-width:802px) {
 	nav ul li a{
 		font-size: 12px;
-	}
-	
-	.sadrzaj-pocetna img, .sadrzaj-balasgram img {
-		height: 150px;
-		width: 150px;
 	}
 }
 
@@ -217,12 +212,8 @@ figure figcaption {
 		font-size: 8px;
 	}
 	
-	.forma-e, .feed, .forma-e table, .forma-e table-caption {
-		font-size: 8px;
-	}
-	
-	.footer {
-		font-size: 10px;
+	.ocjena-str, .footer, .najbolja-pjesma, .playlista, .citat-naslov, .citati {
+		font-size: 12px;
 	}
 	
 	.sadrzaj-kontakt {
@@ -238,47 +229,21 @@ figure figcaption {
 		height: 40px;
 		margin-left: 5px;;
 	}
-	
-	.sadrzaj-pocetna img, .sadrzaj-balasgram img {
-		height: 100px;
-		width: 100px;
-	}
-	
-	.email, .ocjena-stranice {
-		 margin: 0 auto;
-		 width: 75%;
-	}
-}
-
-@media screen and (max-width:590px) {
-	.email, .ocjena-stranice {
-		 width: 50%;
-	}
 }
 
 @media screen and (max-width:540px) {
 	nav ul li a{
 		width: 100%;
 		padding: 0;
-		color: white;
-		font-size: 15px;
 	}
 	
-	.sadrzaj-pocetna img, .sadrzaj-balasgram img {
-		width: 100%;
-	}
-	
-	.forma-e, .feed, .forma-e table, .forma-e table-caption {
-		font-size: 5px;
+	.ocjena-str, nav ul li a, .playlista, .najbolja-pjesma, .citat-naslov, .citati {
+		font-size: 12px;
 	}
 }
 
 @media screen and (max-width:350px) {
-	nav ul li a{
-		font-size: 10px;
-	}
-	
-	.forma-e, .feed {
+	.ocjena-str, .najbolja-pjesma, .playlista, nav ul li a, .citat-naslov, .citati {
 		font-size: 10px;
 	}
 	
@@ -291,13 +256,14 @@ figure figcaption {
 	}
 }
 
-@media screen and (max-width:200px) {
-	.sadrzaj-pocetna p, .sadrzaj-balasgram p {
+@media screen and (max-width:230px) {
+	.sadrzaj-pocetna p, .sadrzaj-balasgram p, .ocjena-str, .najbolja-pjesma, .playlista, .citat-naslov, .citati {
 		font-size: 4px;
 	}
 	
-	.forma-e {
-		font-size: 4px;
+	.sadrzaj-pocetna img, .sadrzaj-balasgram img {
+		height: 50px;
+		width: 50px;
 	}
 }
 
