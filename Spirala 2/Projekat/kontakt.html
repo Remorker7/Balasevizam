@@ -1,0 +1,67 @@
+<div class = "sadrzaj-kontakt">
+	<figure class = "facebook">
+		<img class = "logo" src = "FacebookLogo.png" alt = "Facebook logo"/>
+		<figcaption><a id = "facebook-link" href = "https://www.facebook.com/Remorker7" target = "_blank">Selmir Hasanović</a></figcaption>
+	</figure>
+	<figure class = "instagram">
+		<img class = "logo" src = "InstagramLogo.png" alt = "Instagram logo">
+		<figcaption><a id = "instagram-link" href = "https://www.instagram.com/remorker7/" target = "_blank">Selmir Hasanović</a></figcaption>
+	</figure>
+	<figure class = "viber">
+		<img class = "logo" src = "ViberLogo.png" alt = "Viber logo"/>
+		<figcaption><a id = "viber-link" href = "http://www.viber.com/en/" target = "_blank">062-122-577</a></figcaption>
+	</figure>
+</div>
+<div class = "email">
+	<form class = "ocjena-str" name = "ocjena-str" action = "mailto:shasanovic2@etf.unsa.ba" onsubmit = "return ValidirajFeedback()" method = "post" enctype = "text/plain">
+		<p>Feedback</p>
+		Vaše ime:<br>
+		<input type = "text" name = "ime" class = "unos"><br>
+		Vaša e-mail adresa:<br>
+		<input type = "text" name = "email-adresa" class = "unos"><br>
+		E-mail:<br>
+		<textarea class = "unos" name = "sadrzaj" cols = "40" rows = "10"></textarea><br>
+		<span id = "ime-greska" class = "provjera-greske"></span>
+		<span id = "email-greska" class = "provjera-greske"></span>
+		<span id = "sadrzaj-greska" class = "provjera-greske"></span>
+		<br>
+		<input type = "submit" value = "Pošalji">
+		<input type = "reset" value = "Poništi">
+	</form>
+	<script src = "validacija_feedback.js"></script>
+</div>
+<div class = "ocjena-stranice">
+	<form class = "forma-e" name = "forma-ocjena" action = "kontakt.html" method = "post" enctype = "text/plain" onsubmit = "return ValidirajOcjenu()">
+		<table class = "ocjena-str">
+			<caption>Ocjena stranice</caption>
+			<tr>
+				<td>Da li Vam se sviđa dizajn stranice?</td>
+				<td><input type = "radio" name = "lajk" value = "DA" checked = "checked"> DA
+				<input type = "radio" name = "lajk" value = "NE"> NE</td>
+			</tr>
+			<tr>
+				<td>Da li smatrate ovu stranicu korisnom i zanimljivom?</td>
+				<td><input type = "radio" name = "korisna" value = "DA" checked = "checked"> DA
+				<input type = "radio" name = "korisna" value = "NE"> NE</td>
+			</tr>
+			<tr>
+				<td>Koja podstranica Vam se najviše svidjela?</td>
+				<td><select class = "selekt" name = "podstranica-izbor"> <option value = "Početna">Početna</option> <option value = "Balašgram">Balašgram</option>
+				<option value = "Tekstovi-pjesama">Tekstovi pjesama</option> <option value = "Knjige">Knjige</option> <option value = "Mali-Balaševići">Mali Balaševići</option> <option value = "Kontakt">Kontakt</option> </select></td>
+			</tr>
+			<tr>
+				<td>Ocjenite stranicu (1-5): </td>
+				<td><input type = "text" name = "ocjena" class = "unos" id = "polje-ocjena"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class = "desno"><input type = "submit" value = "Pošalji"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><span id = "ocjena-greska" class = "provjera-greske"></span></td>
+			</tr>
+		</table>
+	</form>
+	<script src = "validacija_ocjena_str.js"></script>
+</div>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Balaševizam - Za sanjare, male blesane, noći besane... </title>
+	<link type = "text/css" rel = "stylesheet" href = "balasevizam.css"/>
+	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+	<meta charset = "utf-8">
+</head>
+<body>
+	<div class = "okvir">
+		<script src = "ajax.js"></script>
+		<div class = "banner">
+			<img src = "banner.jpg" alt = "Đorđe Balašević"/>
+		</div>
+		<div class = "meni-button">
+			<button class = "meni_btn" onclick = "prikazMenija('meni_div')">MENI <span id = "strelica">&#9662;</span></button>
+		</div>
+		<script src = "dropdown_meni.js"></script>
+		<div class = "meni" id = "meni_div">
+			<nav>
+				<ul>
+					<li><a id = "prva" href = "index.html" onclick = "ucitaj('pocetna.html', 'prva'); return false;">POČETNA</a></li>
+					<li><a id = "druga" href = "balasgram.html" onclick = "ucitaj('balasgram.html', 'druga'); return false;">BALAŠGRAM</a></li>
+					<li><a id = "treca" href = "tekstoviPjesama.html" onclick = "ucitaj('tekstoviPjesama.html', 'treca'); return false;">TEKSTOVI PJESAMA</a></li>
+					<li><a id = "cetvrta" href = "knjige.html" onclick = "ucitaj('knjige.html', 'cetvrta'); return false;">KNJIGE</a></li>
+					<li><a id = "peta" href = "maliBalasevici.html" onclick = "ucitaj('maliBalasevici.html', 'peta'); return false;">MALI BALAŠEVIĆI</a></li>
+					<li><a id = "sesta" href = "kontakt.html" onclick = "ucitaj('kontakt.html', 'sesta'); return false;">KONTAKT</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div id = "sadrzaj" class = "sadrzaj">
+			
+		</div>
+		<div class = "footer">
+			<p>Copyright &copy; Selmir Hasanović (remorker7), 2016. godina</p>
+		</div>
+	</div>
+</body>
+</html>
