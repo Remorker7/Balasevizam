@@ -183,7 +183,7 @@
 						echo '</ul>';
 					}
 				?>
-				<!--<script src = "js/validacija_ocjena_str.js"></script>-->
+				<script src = "js/validacija_ocjena_str.js"></script>
 			</div>
 		</div>
 		<div class = "footer">

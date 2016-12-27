@@ -13,7 +13,7 @@
 		return $tekst;
 	}
 	if(isset($_POST['pdfDownload'])){
-		require("fpdf/fpdf.php");
+		require("pdf/fpdf/fpdf.php");
 		$pdf = new FPDF();
 		$pdf->AddPage();
 		$pdf->SetFont("Arial", "B", 14);
@@ -309,9 +309,8 @@
 								$bezGreske2 = true;
 								if($bul){
 									$ID_d = htmlEntities($_POST['IDdodaj'], ENT_QUOTES);
-									$ID_d = preg_replace("#[^0-9a-zA-Z ščćžđŠČĆŽĐ]#i", "", $ID_d);
-									$provjera = preg_replace("#[^a-zA-ZščćžđŠČĆŽĐ]#i", "", $ID_d);
-									if(strlen($provjera) > 0) {
+									$ID_d = preg_replace("#[^0-9]#i", "", $ID_d);
+									if(strlen($ID_d) > 0) {
 										$greske_dodavanje[] = "ID mora sadržati samo brojeve.";
 										$bezGreske2 = false;
 									}
