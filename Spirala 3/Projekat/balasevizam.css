@@ -1,0 +1,536 @@
+﻿@charset "utf-8";
+
+body {
+	margin: 0 auto;
+	padding: 0;
+	background-color: black;
+	height: 100%;
+}
+
+html {
+	height: 100%;
+}
+
+.playlista input {
+    text-align: center;
+	width: 100%;
+}
+
+.okvir {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.banner {
+	height: 293px;
+}
+
+.meni {
+	width: 1000px;
+	margin: 0px auto;
+	margin-left: 0;
+	margin-right: 0;
+	float: left;
+	padding: 0;
+}
+
+.footer {
+	width: 1000px;
+	float: left;
+	padding: 0;
+	margin-top: 5px;
+	color: white;
+	line-height: 0px;
+	background-color: gray;
+	font-size: 14px;
+	text-align: center;
+}
+
+nav {
+	height: 42px;
+	margin: 0 auto;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+}
+
+nav ul li a{
+	float: left;
+	display: inline-block;
+	text-decoration: none;
+	color: white;
+	padding: 0px 20px;
+	text-align: center;
+	margin: 0 auto;
+	line-height: 42px;
+	font-size: 20.28px;
+}
+
+nav ul li a:hover {
+	background-color: white;
+	color: gray;
+	border-radius: 8px;
+}
+
+nav ul li a.aktivni {
+	background-color: white;
+	color: gray;
+	border-radius: 8px;
+}
+
+/* css za podstranicu index.html */
+.sadrzaj {
+	text-align: center;
+	margin: 20px 0px 0px 0px;
+	padding-top: 5px;
+}
+
+.playlista {
+	border: 1px solid white;
+	width: 100%;
+	color: white;
+	text-align: center;
+	border-collapse: collapse;
+	margin-bottom: 5px;
+}
+
+.playlista td, tr, th {
+	border: 1px solid white;
+}
+
+.pjesma, .top-slike {
+	width: 100%;
+	color: white;
+	margin: 0px 0px 5px 0px;
+	padding-top: 5px;
+}
+
+.pretraga_xml {
+	border: 0;
+}
+
+.najbolja-pjesma {
+	font-size: 15px;
+}
+
+.sadrzaj {
+	margin-bottom: 0px;
+}
+
+.desno {
+	text-align: center;
+}
+
+.pjesma table {
+	margin: 0 auto;
+}
+/* css za podstranicu index.html */
+
+/* css za podstranicu kontakt.html */
+.sadrzaj-kontakt {
+	float: left;
+	width: 100%;
+}
+
+.facebook, .instagram, .viber {
+	width: 100px;
+	float: left;
+}
+
+.logo {
+	height: 100px;
+	width: 100px;
+}
+
+.email, .ocjena-stranice, .sadrzaj-stranice {
+	text-align: left !important;
+	float: left;
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	padding: 5px;
+	border: 1px solid white;
+}
+
+#polje-ocjena {
+	width: 73.5%;
+}
+
+.ocjena-str, .najbolja-pjesma, #viber-kontakt {
+	color: white;
+}
+
+.ocjena-str p {
+	text-align: center;
+}
+
+figure {
+    display: inline-block;
+}
+
+figure figcaption {
+    text-align: center;
+}
+/* kraj css-a za podstranicu kontakt.html */
+
+/* css za podstranicu balasgram.html */
+.galerija {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.75);
+	display: none;
+}
+
+.galerija-slika {
+	position: fixed;
+	width: 500px;
+	height: 500px;
+	left: calc(50% - 250px);
+	top: calc(50% - 250px);
+}
+
+.galerija-slika img {
+	width: 500px;
+	height: 500px;
+	border-radius: 10px;
+}
+
+.sadrzaj img {
+	border-radius: 10px;
+}
+/* kraj css-a za podstranicu balasgram.html */
+
+.provjera-greske{
+	color: #FF1F1F;
+	padding-bottom: 15px;
+}
+
+.unos {
+	border: 1px solid #5E6E66;
+}
+
+.link_pjesma {
+	color: white;
+	text-align: center;
+	margin: 0 auto;
+	font-size: 16.28px;
+}
+
+.naziv_album {
+	color: white;
+	text-align: center;
+	margin: 0 auto;
+	font-size: 20.28px;
+}
+
+.postovi {
+	color: white;
+	font-size: 16px;
+}
+
+.postovi img {
+	padding-left: 20px;
+	float: left;
+}
+
+.postovi p {
+	float: right;
+}
+
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+.form .message a {
+  color: blue;
+  text-decoration: none;
+}
+
+#poruka-log {
+	color: white;
+}
+
+#odjava {
+	text-decoration: none;
+}
+
+@media screen and (max-width:999px) {
+	.banner {
+		height: auto;
+	}
+	
+	.okvir, .meni, .sadrzaj, .footer {
+		width: 100%;
+	}
+	
+	figure figcaption {
+		text-align: left;
+		font-size: 10px;
+	}
+	
+	.banner img {
+		width: 100%;
+	}
+	
+	.sadrzaj img {
+		height: 250px;
+		width: 250px;
+	}
+	
+	.postovi img {
+		height: 50%;
+		width: 50%;
+	}
+	
+	.logo {
+		width: 50px !important;
+		height: 50px !important;
+	}
+
+	nav ul li a {
+		font-size: 13px;
+	}
+	
+	.unos {
+		width: 90%;
+	}
+	
+	.ocjena-str, .footer, .najbolja-pjesma, .playlista, .citat-naslov, .citati, .provjera-greske, .naziv_album, .postovi {
+		font-size: 12px;
+	}
+	
+	.email, .ocjena-stranice {
+		 margin: 0 auto;
+		 width: 65%;
+	}
+}
+
+@media screen and (max-width:802px) {
+	nav ul li a{
+		font-size: 11px;
+	}
+}
+
+@media screen and (max-width:690px) {
+	nav ul li a{
+		font-size: 7px;
+	}
+	
+	.ocjena-str, .footer, .najbolja-pjesma, .playlista, .citat-naslov, .citati, .provjera-greske, .naziv_album, .postovi {
+		font-size: 12px;
+	}
+	
+	.sadrzaj-kontakt {
+		margin: 0 auto;
+	}
+	
+	.facebook, .instagram, .viber {
+		margin-left: 5%;
+	}
+	
+	.logo {
+		width: 40px !important;
+		height: 40px !important;
+		margin-left: 5px !important;
+	}
+}
+
+@media screen and (min-width:541px) {
+	.meni-button, .meni_btn {
+		height: 0px !important;
+		visibility: hidden;
+		overflow: hidden;
+		display: none;
+	}
+	
+	.meni {
+		display: block !important;
+		overflow: visible !important;
+	}
+}
+
+@media screen and (max-width:540px) {
+	nav ul li a{
+		width: 100%;
+		padding: 0;
+	}
+	
+	.ocjena-str, nav ul li a, .playlista, .najbolja-pjesma, .citat-naslov, .citati, .meni_btn, .provjera-greske, .naziv_album, .postovi{
+		font-size: 12px;
+	}
+	
+	.meni-button, .meni_btn {
+		width: 100%;
+	}
+	
+	.meni {
+		transition: height 0.3s linear 0s;
+		display: none;
+		overflow: hidden;
+		height: 10px;
+	}
+	
+	.galerija-slika {
+		width: 300px;
+		height: 300px;
+		left: calc(50% - 150px);
+		top: calc(50% - 150px);
+	}
+	
+	.galerija-slika img {
+		width: 300px;
+		height: 300px;
+	}
+	
+	.logo {
+		width: 30px !important;
+		height: 30px !important;
+	}
+}
+
+@media screen and (max-width:350px) {
+	.ocjena-str, .najbolja-pjesma, .playlista, nav ul li a, .citat-naslov, .citati, .meni_btn, .provjera-greske, .naziv_album, .postovi {
+		font-size: 10px;
+	}
+	
+	.footer {
+		font-size: 6px;
+	}
+	
+	.selekt {
+		width: 55px !important;
+	}
+	
+	.galerija-slika {
+		width: 200px;
+		height: 200px;
+		left: calc(50% - 100px);
+		top: calc(50% - 100px);
+	}
+	
+	.galerija-slika img {
+		width: 200px;
+		height: 200px;
+	}
+	
+	.logo {
+		width: 20px !important;
+		height: 20px !important;
+	}
+}
+
+@media screen and (max-width:230px) {
+	.sadrzaj p, .ocjena-str, .najbolja-pjesma, .playlista, .citat-naslov, .citati, .meni_btn, .provjera-greske, .naziv_album, .postovi {
+		font-size: 4px;
+	}
+	
+	.sadrzaj img {
+		height: 50px;
+		width: 50px;
+	}
+	
+	.logo {
+		width: 20px !important;
+		height: 20px !important;
+	}
+	.galerija-slika {
+		width: 150px;
+		height: 150px;
+		left: calc(50% - 75px);
+		top: calc(50% - 75px);
+	}
+	
+	.galerija-slika img {
+		width: 150px;
+		height: 150px;
+	}
+}
+
+@media screen and (max-width:166px) {
+	nav ul li a{
+		font-size: 4px;
+		margin-left: 0px;
+	}
+	
+	.footer {
+		font-size: 2px;
+	}
+	
+	.logo {
+		width: 25px !important;
+		height: 25px !important;
+	}
+	
+	figure figcaption {
+		text-align: left;
+		font-size: 5px;
+	}
+	
+	.galerija-slika {
+		width: 40px;
+		height: 40px;
+		left: calc(50% - 20px);
+		top: calc(50% - 20px);
+	}
+	
+	.galerija-slika img {
+		width: 40px;
+		height: 40px;
+	}
+}
