@@ -309,8 +309,9 @@
 								$bezGreske2 = true;
 								if($bul){
 									$ID_d = htmlEntities($_POST['IDdodaj'], ENT_QUOTES);
-									$ID_d = preg_replace("#[^0-9]#i", "", $ID_d);
-									if(strlen($ID_d) < 1) {
+									$ID_d = preg_replace("#[^0-9a-zA-Z ščćžđŠČĆŽĐ]#i", "", $ID_d);
+									$provjera = preg_replace("#[^a-z A-ZščćžđŠČĆŽĐ]#i", "", $ID_d);
+									if(strlen($provjera) > 0) {
 										$greske_dodavanje[] = "Neispravan ID.";
 										$bezGreske2 = false;
 									}
