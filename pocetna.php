@@ -310,8 +310,8 @@
 								if($bul){
 									$ID_d = htmlEntities($_POST['IDdodaj'], ENT_QUOTES);
 									$ID_d = preg_replace("#[^0-9]#i", "", $ID_d);
-									if(strlen($ID_d) > 0) {
-										$greske_dodavanje[] = "ID mora sadržati samo brojeve.";
+									if(strlen($ID_d) < 1) {
+										$greske_dodavanje[] = "Neispravan ID.";
 										$bezGreske2 = false;
 									}
 									$izvodjac_d = htmlEntities($_POST['izvodjacdodaj'], ENT_QUOTES);
