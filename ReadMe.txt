@@ -1,62 +1,62 @@
-Spirala 3 – Balaševizam
-(Selmir Hasanoviæ)
+ï»¿Spirala 3 â€“ BalaÅ¡evizam
+(Selmir HasanoviÄ‡)
 
 Uvodne napomene
--	Napravio sam sistem za registraciju i login korisnika. Za registraciju korisnici trebaju unijeti username (koji je validiran, tako da je onemoguæeno da dva korisnika imaju isti username), password (kao i potvrdu passworda) i e-mail (koji je, takoğer, validiran). Username nije case sensitive, tako da je svejedno ako se admin uloguje sa username-om admin ili npr. ADMin, ali je onemoguæeno da se kreira još jedan raèun ADMin ako veæ postoji raèun sa usernam-om admin. Password se u xml sprema kriptovan pomoæu funkcije md5. Za svakog novog korisnika se pravi novi xml fajl u folderu korisnici.
--	Podaci za login kao admin su: username ¬– admin, password – 12345. Podaci za login test korisnika su: username – test, password ¬– 12345.
--	Onemoguæeno je pregledavanje stranica sve dok se korisnik ne uloguje. U gornjem lijevom uglu korisnik ima opciju da klikne na link za log out sa stranice.
--	Za razliku od prethodne spirale gdje su se najbolje pjesme prikazivale u obliku tabele, sada sam za potrebe izrade zadataka u ovoj spiralu tu tabelu predstavio u obliku forme, kako bih podatke mogao spremati u xml fajlove i èitati ih iz istih.
+-	Napravio sam sistem za registraciju i login korisnika. Za registraciju korisnici trebaju unijeti username (koji je validiran, tako da je onemoguÄ‡eno da dva korisnika imaju isti username), password (kao i potvrdu passworda) i e-mail (koji je, takoÄ‘er, validiran). Username nije case sensitive, tako da je svejedno ako se admin uloguje sa username-om admin ili npr. ADMin, ali je onemoguÄ‡eno da se kreira joÅ¡ jedan raÄun ADMin ako veÄ‡ postoji raÄun sa usernam-om admin. Password se u xml sprema kriptovan pomoÄ‡u funkcije md5. Za svakog novog korisnika se pravi novi xml fajl u folderu korisnici.
+-	Podaci za login kao admin su: username Â¬â€“ admin, password â€“ 12345. Podaci za login test korisnika su: username â€“ test, password Â¬â€“ 12345.
+-	OnemoguÄ‡eno je pregledavanje stranica sve dok se korisnik ne uloguje. U gornjem lijevom uglu korisnik ima opciju da klikne na link za log out sa stranice.
+-	Za razliku od prethodne spirale gdje su se najbolje pjesme prikazivale u obliku tabele, sada sam za potrebe izrade zadataka u ovoj spiralu tu tabelu predstavio u obliku forme, kako bih podatke mogao spremati u xml fajlove i Äitati ih iz istih.
 -	Izbrisao sam ajax pozive.
--	Dodao sam sadraj na sve podstranice koje nisam kompletirao na prethodnim spiralama.
--	Svi folderi namijenjeni za xml fajlove sadre neke testne xml fajlove koje sam ja kreirao i testirao prilikom izrade spirale.
--	Sve fajlove sam razvrstao u odgovarajuæe foldere (slike, javascript, pdf).
+-	Dodao sam sadrÅ¾aj na sve podstranice koje nisam kompletirao na prethodnim spiralama.
+-	Svi folderi namijenjeni za xml fajlove sadrÅ¾e neke testne xml fajlove koje sam ja kreirao i testirao prilikom izrade spirale.
+-	Sve fajlove sam razvrstao u odgovarajuÄ‡e foldere (slike, javascript, pdf).
 
-I – Šta je urağeno?
+I â€“ Å ta je uraÄ‘eno?
 Zadatak 1
--	Sve forme koje sam kreirao na stranici (trenutno imam èetiri forme) su spašene u odgovarajuæe xml fajlove (folderi pjesme-najbolje, pjesme, feedback i ocjene). Svi podaci koje korisnik unosi su validirani korištenjem JS-a i PHP-a. Poruke o eventualnim greškama se ispisuju korištenjem PHP-a, ispod submit-a (u obliku liste, crvenom bojom).
--	XSS ranjivost koda sprijeèio sam korištenjem funkcije htmlspecialchars na svakom mjestu gdje se ispisuju podaci koje unosi korisnik putem formi, a pri uèitavanju unešenih podataka koristio sam funkciju htmlEntities uz dodatnu validaciju unešenih karaktera. Nakon korištenja ovih funkcija, nije moguæe ispravno spasiti rijeèi koje sadre slova š, è, æ,  i ğ, jer ova slova budu zamijenjena (npr. š bude zamijenjeno sa scaron), iako sam kao treæi parametar stavio da se koristi UTF-8.
--	Unos, izmjena i brisanje su omoguæeni adminu. Ako je ulogovan neki drugi korisnik, neæe mu biti prikazane dodatne opcije, nego æe biti samo prikazani podaci iz xml-a. Ako je ulogovan admin, na formi na kojoj se prikazuju najbolje pjesme æe mu pored svake pjesme biti prikazan znak „X“ za brisanje pjesme. Ispod liste pjesama dodao sam dva reda. Jedan red slui za dodavanje nove pjesme (izvršio sam provjeru da li ID veæ postoji, ako da, korisniku se ispisuje poruka o grešci), a dodavanje se vrši klikom na button sa znakom „+“. Drugi red slui za editovanje neke pjesme, klikom na button sa znakom „E“ (edit). Ukoliko korisnik unese validan ID i validne podatke za naziv izvoğaèa i pjesme, promjena æe biti izvršena, u suprotnom se ispod forme ispisuju podaci o greškama.
+-	Sve forme koje sam kreirao na stranici (trenutno imam Äetiri forme) su spaÅ¡ene u odgovarajuÄ‡e xml fajlove (folderi pjesme-najbolje, pjesme, feedback i ocjene). Svi podaci koje korisnik unosi su validirani koriÅ¡tenjem JS-a i PHP-a. Poruke o eventualnim greÅ¡kama se ispisuju koriÅ¡tenjem PHP-a, ispod submit-a (u obliku liste, crvenom bojom).
+-	XSS ranjivost koda sprijeÄio sam koriÅ¡tenjem funkcije htmlspecialchars na svakom mjestu gdje se ispisuju podaci koje unosi korisnik putem formi, a pri uÄitavanju uneÅ¡enih podataka koristio sam funkciju htmlEntities uz dodatnu validaciju uneÅ¡enih karaktera. Nakon koriÅ¡tenja ovih funkcija, nije moguÄ‡e ispravno spasiti rijeÄi koje sadrÅ¾e slova Å¡, Ä, Ä‡, Å¾ i Ä‘, jer ova slova budu zamijenjena (npr. Å¡ bude zamijenjeno sa scaron), iako sam kao treÄ‡i parametar stavio da se koristi UTF-8.
+-	Unos, izmjena i brisanje su omoguÄ‡eni adminu. Ako je ulogovan neki drugi korisnik, neÄ‡e mu biti prikazane dodatne opcije, nego Ä‡e biti samo prikazani podaci iz xml-a. Ako je ulogovan admin, na formi na kojoj se prikazuju najbolje pjesme Ä‡e mu pored svake pjesme biti prikazan znak â€Xâ€œ za brisanje pjesme. Ispod liste pjesama dodao sam dva reda. Jedan red sluÅ¾i za dodavanje nove pjesme (izvrÅ¡io sam provjeru da li ID veÄ‡ postoji, ako da, korisniku se ispisuje poruka o greÅ¡ci), a dodavanje se vrÅ¡i klikom na button sa znakom â€+â€œ. Drugi red sluÅ¾i za editovanje neke pjesme, klikom na button sa znakom â€Eâ€œ (edit). Ukoliko korisnik unese validan ID i validne podatke za naziv izvoÄ‘aÄa i pjesme, promjena Ä‡e biti izvrÅ¡ena, u suprotnom se ispod forme ispisuju podaci o greÅ¡kama.
 
 Zadatak 2
--	Ukoliko je korisnik ulogovan kao admin, na poèetnoj formi æe mu se prikazati dugme „preuzmite predloene pjesme (csv)“. Klikom na dugme admin moe preuzeti csv fajl o do sada predloenim pjesmama koje su poslane putem forme „Predloite pjesmu“. Podaci se uèitavaju iz xml fajlova iz foldera „pjesme“.
--	Za otvaranje .csv fajla koristio sam notepad++ i podaci se prikazuju onako kako je i predviğeno, s tim da se po defaultu dodaju dvostruki navodnici oko polja koja sadre više od jedne rijeèi (tj. koja sadre white spaces).
--	Pri direktnom otvaranju u Excel-u imao sam problem sa UTF-8 karakterima pošto ih excel po defaultu ne prepoznaje, nego se podaci iz .csv fajla trebaju importovati pomoæu Data -> Import text tako da se promijeni encoding na UTF-8. Pri otvaranju fajla pomoæu notepad++ nisam imao taj problem jer sam u php-u podesio ovaj format za spremanje fajlova.
+-	Ukoliko je korisnik ulogovan kao admin, na poÄetnoj formi Ä‡e mu se prikazati dugme â€preuzmite predloÅ¾ene pjesme (csv)â€œ. Klikom na dugme admin moÅ¾e preuzeti csv fajl o do sada predloÅ¾enim pjesmama koje su poslane putem forme â€PredloÅ¾ite pjesmuâ€œ. Podaci se uÄitavaju iz xml fajlova iz foldera â€pjesmeâ€œ.
+-	Za otvaranje .csv fajla koristio sam notepad++ i podaci se prikazuju onako kako je i predviÄ‘eno, s tim da se po defaultu dodaju dvostruki navodnici oko polja koja sadrÅ¾e viÅ¡e od jedne rijeÄi (tj. koja sadrÅ¾e white spaces).
+-	Pri direktnom otvaranju u Excel-u imao sam problem sa UTF-8 karakterima poÅ¡to ih excel po defaultu ne prepoznaje, nego se podaci iz .csv fajla trebaju importovati pomoÄ‡u Data -> Import text tako da se promijeni encoding na UTF-8. Pri otvaranju fajla pomoÄ‡u notepad++ nisam imao taj problem jer sam u php-u podesio ovaj format za spremanje fajlova.
 Zadatak 3
--	Korisnicima je prikazan button za preuzimanje izvještaja u pdf-u (preuzmite izvještaj (pdf) na poèetnoj stranici). Klikom na dugme korisnik preuzima pdf sa podacima o najboljim pjesmama, o predloenim pjesmama i registrovanim korisnicima. Sve tri grupe podataka od kojih se sastoji pdf se uèitavaju iz odgovarajuæih xml fajlova.
+-	Korisnicima je prikazan button za preuzimanje izvjeÅ¡taja u pdf-u (preuzmite izvjeÅ¡taj (pdf) na poÄetnoj stranici). Klikom na dugme korisnik preuzima pdf sa podacima o najboljim pjesmama, o predloÅ¾enim pjesmama i registrovanim korisnicima. Sve tri grupe podataka od kojih se sastoji pdf se uÄitavaju iz odgovarajuÄ‡ih xml fajlova.
 -	Koristio sam fpdf biblioteku za kreiranje pdf fajla.
 Zadatak 4
--	Na poèetnoj stranici napravio sam formu gdje korisnik moe unijeti podatke za pretraivanje najboljih pjesama i izvoğaèa tih pjesama istovremeno. Dok korisnik unosi tekst za pretragu ispod se izlistavaju rezultati (maksimalno 10), bez reloada stranice. Ako nema rezultata za unešeni tekst, korisniku se ispisuje poruka da nema rezultata.
--	Klikom na dugme pretrai korisniku se ispod forme izlistavaju svi rezultati za tekst koji je unio, èak i ako ih ima više od 10. Ukoliko je došlo do neke greške, korisniku se ispisuje odgovarajuæi tekst.
--	Za izradu ovog zadatka napravio sam js fajl (nalazi se u js folderu) instantPretrazivanje.js u kojem pravim ajax poziv kako ne bih morao osvjeavati stranicu, a koristio sam i php skriptu instantPretraga kako bih pronašao rezultate pretrage.
+-	Na poÄetnoj stranici napravio sam formu gdje korisnik moÅ¾e unijeti podatke za pretraÅ¾ivanje najboljih pjesama i izvoÄ‘aÄa tih pjesama istovremeno. Dok korisnik unosi tekst za pretragu ispod se izlistavaju rezultati (maksimalno 10), bez reloada stranice. Ako nema rezultata za uneÅ¡eni tekst, korisniku se ispisuje poruka da nema rezultata.
+-	Klikom na dugme pretraÅ¾i korisniku se ispod forme izlistavaju svi rezultati za tekst koji je unio, Äak i ako ih ima viÅ¡e od 10. Ukoliko je doÅ¡lo do neke greÅ¡ke, korisniku se ispisuje odgovarajuÄ‡i tekst.
+-	Za izradu ovog zadatka napravio sam js fajl (nalazi se u js folderu) instantPretrazivanje.js u kojem pravim ajax poziv kako ne bih morao osvjeÅ¾avati stranicu, a koristio sam i php skriptu instantPretraga kako bih pronaÅ¡ao rezultate pretrage.
 Zadatak 5
--	Uspješno urağen deployment na OpenShift:
+-	UspjeÅ¡no uraÄ‘en deployment na OpenShift:
 http://balasevizam-balasevizam2017.44fs.preview.openshiftapps.com/
 
-II – Šta nije urağeno?
+II â€“ Å ta nije uraÄ‘eno?
 /
-III - Bug-ovi koje ste primijetili ali niste stigli ispraviti, a znate rješenje (opis rješenja)
+III - Bug-ovi koje ste primijetili ali niste stigli ispraviti, a znate rjeÅ¡enje (opis rjeÅ¡enja)
 /
 
-IV  - Bug-ovi koje ste primijetili ali ne znate rješenje
+IV  - Bug-ovi koje ste primijetili ali ne znate rjeÅ¡enje
 /
-V  - Lista fajlova u formatu NAZIVFAJLA - Opis u vidu jedne reèenice šta se u fajlu nalazi
-•	feedback – folder gdje su smješteni xml fajlovi u koje su spremljeni podaci sa forme feedback
-•	fdpf – folder u kojem je spremljena fpdf biblioteka
-•	js – folder u kojem su smješteni javascript fajlovi (u odnosu na prethodnu spiralu dodat fajl instantPretrazivanje.js prilikom izrade 4. zadatka
-•	korisnici – folder u kojem su smješteni xml fajlovi u kojima se nalaze podaci registrovanih korisnika
-•	ocjene – folder u kojem su smješteni xml fajlovi u koje su spremljeni podaci sa forme za ocjenu stranice
-•	pdf – folder u kojem se nalaze pdf fajlovi koji su dostupni za download na podstranici knjige
-•	pjesme – folder u kojem se nalaze xml fajlovi u koje su smještene informacije o pjesmama koje korisnici šalju putem forme na poèetnoj strani
-•	pjesme-najbolje – folder u koji se smještaju najbolje pjesme na poèetnoj strani
-•	slike – folder u kojem su smještene sve slike koje se nalaze na stranici
-•	balasevizam.css – css fajl za èitav projekat
-•	balasgram.php – podstranica na kojoj su smješteni citati u obliku galerije
-•	index.php – poèetna stranica namijenjena za login korisnika
-•	instantPretraga.php – php skripta za pretragu koja je realizovana u sklopu 4. zadatka
-•	knjige.php – podstranica na kojoj se nalaze slike svih knjiga i omoguæava download knjiga u pdf formatu
-•	kontakt.php – podstranica koja sadri kontakt informacije i forme za ocjenu stranice
-•	maliBalasevici.php – podstranica koja sadri tekstove i slike drugih umjetnika
-•	odjava.php – php skripta koja omoguæava korisnicima da se odjave sa stranice
-•	pocetna.php – podstranica na kojoj su smještene forme za slanje i prikaz pjesama, i na njoj je omoguæen download pdf izvještaja i csv fajla
-•	registracija.php – stranica za registraciju novih korisnika
-•	tekstoviPjesama.php – podstranica na kojoj se nalaze nazivi albuma, pjesama i linkovi na tekstove svih pjesama.
+V  - Lista fajlova u formatu NAZIVFAJLA - Opis u vidu jedne reÄenice Å¡ta se u fajlu nalazi
+â€¢	feedback â€“ folder gdje su smjeÅ¡teni xml fajlovi u koje su spremljeni podaci sa forme feedback
+â€¢	fdpf â€“ folder u kojem je spremljena fpdf biblioteka
+â€¢	js â€“ folder u kojem su smjeÅ¡teni javascript fajlovi (u odnosu na prethodnu spiralu dodat fajl instantPretrazivanje.js prilikom izrade 4. zadatka
+â€¢	korisnici â€“ folder u kojem su smjeÅ¡teni xml fajlovi u kojima se nalaze podaci registrovanih korisnika
+â€¢	ocjene â€“ folder u kojem su smjeÅ¡teni xml fajlovi u koje su spremljeni podaci sa forme za ocjenu stranice
+â€¢	pdf â€“ folder u kojem se nalaze pdf fajlovi koji su dostupni za download na podstranici knjige
+â€¢	pjesme â€“ folder u kojem se nalaze xml fajlovi u koje su smjeÅ¡tene informacije o pjesmama koje korisnici Å¡alju putem forme na poÄetnoj strani
+â€¢	pjesme-najbolje â€“ folder u koji se smjeÅ¡taju najbolje pjesme na poÄetnoj strani
+â€¢	slike â€“ folder u kojem su smjeÅ¡tene sve slike koje se nalaze na stranici
+â€¢	balasevizam.css â€“ css fajl za Äitav projekat
+â€¢	balasgram.php â€“ podstranica na kojoj su smjeÅ¡teni citati u obliku galerije
+â€¢	index.php â€“ poÄetna stranica namijenjena za login korisnika
+â€¢	instantPretraga.php â€“ php skripta za pretragu koja je realizovana u sklopu 4. zadatka
+â€¢	knjige.php â€“ podstranica na kojoj se nalaze slike svih knjiga i omoguÄ‡ava download knjiga u pdf formatu
+â€¢	kontakt.php â€“ podstranica koja sadrÅ¾i kontakt informacije i forme za ocjenu stranice
+â€¢	maliBalasevici.php â€“ podstranica koja sadrÅ¾i tekstove i slike drugih umjetnika
+â€¢	odjava.php â€“ php skripta koja omoguÄ‡ava korisnicima da se odjave sa stranice
+â€¢	pocetna.php â€“ podstranica na kojoj su smjeÅ¡tene forme za slanje i prikaz pjesama, i na njoj je omoguÄ‡en download pdf izvjeÅ¡taja i csv fajla
+â€¢	registracija.php â€“ stranica za registraciju novih korisnika
+â€¢	tekstoviPjesama.php â€“ podstranica na kojoj se nalaze nazivi albuma, pjesama i linkovi na tekstove svih pjesama.
