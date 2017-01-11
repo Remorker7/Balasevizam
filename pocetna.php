@@ -22,22 +22,21 @@
 		$tekst = urldecode($tekst);
 		$pdf->Cell(50, 10, $tekst, 0, 1);
 		$pdf->Cell(100, 10, "", 0, 1);
-		$fajlovi = glob('pjesme-najbolje/*.xml');
-		if(count($fajlovi) > 0){
-			$pdf->SetFont("Arial", "B", 12);
-			$pdf->Cell(50, 10, "Najbolje pjesme ovog mjeseca su: ", 0, 1);
-		}
+		$pdf->SetFont("Arial", "B", 12);
+		$pdf->Cell(50, 10, "Najbolje pjesme ovog mjeseca su: ", 0, 1);
 		$pdf->SetFont("Arial", "", 12);
-		foreach($fajlovi as $fajl) {
-			$xml = new SimpleXMLElement($fajl, 0, true);
+		
+		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+		$upit = 'SELECT * FROM najbolje';
+		foreach($veza->query($upit) as $red) {
 			$pdf->Cell(30, 10, "ID", 1, 0);
-			$pdf->Cell(150, 10, $xml->ID, 1, 1);
-			$tekst = $xml->izvodjac;
+			$pdf->Cell(150, 10, $red['id'], 1, 1);
+			$tekst = $red['izvodjac'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
 			$pdf->Cell(30, 10, "Izvodjac", 1, 0);
 			$pdf->Cell(150, 10, $tekst, 1, 1);
-			$tekst = $xml->pjesma;
+			$tekst = $red['pjesma'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
 			$pdf->Cell(30, 10, "Pjesma", 1, 0);
@@ -45,28 +44,27 @@
 			$pdf->Cell(50, 10, "", 0, 1);
 		}
 		$pdf->Cell(100, 10, "", 0, 1);
-		$fajlovi = glob('pjesme/*.xml');
-		if(count($fajlovi) > 0){
-			$pdf->SetFont("Arial", "B", 12);
-			$tekst = "Predložene pjesme su: ";
-			$tekst = barbarskiNacin($tekst);
-			$tekst = urldecode($tekst);
-			$pdf->Cell(50, 10, $tekst, 0, 1);
-		}
+		$pdf->SetFont("Arial", "B", 12);
+		$tekst = "Predložene pjesme su: ";
+		$tekst = barbarskiNacin($tekst);
+		$tekst = urldecode($tekst);
+		$pdf->Cell(50, 10, $tekst, 0, 1);
 		$pdf->SetFont("Arial", "", 12);
-		foreach($fajlovi as $fajl) {
-			$xml = new SimpleXMLElement($fajl, 0, true);
-			$tekst = $xml->izvodjac;
+		
+		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+		$upit = 'SELECT * FROM pjesme';
+		foreach($veza->query($upit) as $red) {
+			$tekst = $red['izvodjac'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
 			$pdf->Cell(30, 10, "Izvodjac", 1, 0);
 			$pdf->Cell(150, 10, $tekst, 1, 1);
-			$tekst = $xml->pjesma;
+			$tekst = $red['pjesma'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
 			$pdf->Cell(30, 10, "Pjesma", 1, 0);
 			$pdf->Cell(150, 10, $tekst, 1, 1);
-			$tekst = $xml->mjesec;
+			$tekst = $red['mjesec'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
 			$pdf->Cell(30, 10, "Mjesec", 1, 0);
@@ -74,25 +72,120 @@
 			$pdf->Cell(50, 10, "", 0, 1);
 		}
 		$pdf->Cell(100, 10, "", 0, 1);
-		$fajlovi = glob('korisnici/*.xml');
-		if(count($fajlovi) > 0){
-			$pdf->SetFont("Arial", "B", 12);
-			$pdf->Cell(50, 10, "Registrovani korisnici su: ", 0, 1);
-		}
+		$pdf->SetFont("Arial", "B", 12);
+		$pdf->Cell(50, 10, "Registrovani korisnici su: ", 0, 1);
 		$pdf->SetFont("Arial", "", 12);
-		foreach($fajlovi as $fajl) {
-			$xml = new SimpleXMLElement($fajl, 0, true);
-			$tekst = $xml->username;
+		
+		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+		$upit = 'SELECT * FROM korisnici';
+		foreach($veza->query($upit) as $red) {
+			$tekst = $red['username'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
 			$pdf->Multicell(0, 2, "- " . $tekst . "\n\n\n");
 		}
 		$pdf->output('D','balasevizam_izvjestaj.pdf');
 	}
+	
 	session_start();
-	if(!file_exists('korisnici/' . $_SESSION['username'] . '.xml')){
+	$server = "localhost";
+	$korisnik = "remorker7";
+	$pass = "balasevizam7";
+	$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
+	mysqli_set_charset($veza, 'utf8');
+	if (!$veza) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	$koJe = $_SESSION['username'];
+	$upit = "SELECT * FROM korisnici where username = '$koJe'";
+	$rezultat = $veza->query($upit);
+	if ($rezultat->num_rows < 1){
 		header('Location: index.php');
 		die;
+	}
+	if(isset($_POST['XMLtoDB'])){
+		$fajlovi = glob('korisnici/*.xml');
+		foreach($fajlovi as $fajl) {
+			$xml = new SimpleXMLElement($fajl, 0, true);
+			$username = $xml->username;
+			$password = $xml->password;
+			$email = $xml->email;
+			
+			$provjeraDuplih = "SELECT * FROM korisnici where username = '$username'";
+			$rezultat = $veza->query($provjeraDuplih);
+			if ($rezultat->num_rows < 1){
+				$upit = "INSERT INTO korisnici (username, password, email)
+				VALUES ('$username', '$password', '$email')";
+				if (mysqli_query($veza, $upit)) {
+					echo "";
+				}
+				else {
+					echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+				}
+			}
+		}
+		
+		$fajlovi = glob('pjesme/*.xml');
+		foreach($fajlovi as $fajl) {
+			$xml = new SimpleXMLElement($fajl, 0, true);
+			$izvodjac = $xml->izvodjac;
+			$pjesma = $xml->pjesma;
+			$mjesec = $xml->mjesec;
+			$provjeraDuplih = "SELECT * FROM pjesme where izvodjac = '$izvodjac' and pjesma = '$pjesma' and mjesec = '$mjesec'";
+			$rezultat = $veza->query($provjeraDuplih);
+			if ($rezultat->num_rows < 1){
+				$upit = "INSERT INTO pjesme (id, izvodjac, pjesma, mjesec)
+				VALUES (DEFAULT, '$izvodjac', '$pjesma', '$mjesec')";
+				if (mysqli_query($veza, $upit)) {
+					echo "";
+				}
+				else {
+					echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+				}
+			}
+		}
+		
+		$fajlovi = glob('pjesme-najbolje/*.xml');
+		foreach($fajlovi as $fajl) {
+			$xml = new SimpleXMLElement($fajl, 0, true);
+			$ID = $xml->ID;
+			$izvodjac = $xml->izvodjac;
+			$pjesma = $xml->pjesma;
+			$korisnik = 'N/A';
+			$traziKorisnika = "SELECT * FROM korisnici where username = 'admin'";
+			$izvrsi = $veza->query($traziKorisnika);
+			if($izvrsi->num_rows > 0) {
+				$rez = mysqli_fetch_row($izvrsi);
+				$korisnik = $rez[0];
+			}
+			$pjesmafk = -1;
+			$traziFK = "SELECT * FROM pjesme where izvodjac = '$izvodjac' and pjesma = '$pjesma'";
+			$izvrsi = $veza->query($traziFK);
+			if($izvrsi->num_rows > 0) {
+				$rez = mysqli_fetch_row($izvrsi);
+				$pjesmafk = $rez[0];
+			}
+			$provjeraDuplih = "SELECT * FROM pjesme where id = '$ID'";
+			$rezultat = $veza->query($provjeraDuplih);
+			if ($rezultat->num_rows < 1){
+				if($pjesmafk != -1) {
+					$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+					VALUES ('$ID', '$izvodjac', '$pjesma', '$korisnik', '$pjesmafk')";
+				}
+				else{
+					$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+					VALUES ('$ID', '$izvodjac', '$pjesma', '$korisnik', DEFAULT)";
+				} 
+				if (mysqli_query($veza, $upit)) {
+					echo "";
+				}
+				else {
+					echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+				}
+			}
+		}
+	
+		header('Location: pocetna.php');
 	}
 	
 	$greske_izmjena = array();
@@ -122,11 +215,14 @@
 			$bezGreske = false;
 		}
 		if($bezGreske){
-			$xml = new SimpleXMLElement('<?xml version = "1.0" encoding = "utf-8"?><pjesma></pjesma>');
-			$xml->addChild('izvodjac', $izvodjac);
-			$xml->addChild('pjesma', $pjesma);
-			$xml->addChild('mjesec', $mjesec);
-			$xml->asXML('pjesme/' . 'pjesma_' . date("Y-m-d-H-i-s"). '.xml');
+			$upit = "INSERT INTO pjesme (id, izvodjac, pjesma, mjesec)
+			VALUES (DEFAULT, '$izvodjac', '$pjesma', '$mjesec')";
+			if (mysqli_query($veza, $upit)) {
+				echo "";
+			}
+			else {
+				echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+			}
 			header('Location: pocetna.php');
 			die;
 		}
@@ -137,10 +233,10 @@
 		header('Content-Type: text/csv; charset = utf-8');
 		header('Content-Disposition: attachment; filename = pjesme.csv');
 		$fp = fopen('php://output', 'w');
-		$fajlovi = glob('pjesme/*.xml');
-		foreach($fajlovi as $fajl) {
-			$xml = new SimpleXMLElement($fajl, 0, true);
-			$red = array($xml->izvodjac, $xml->pjesma, $xml->mjesec);
+		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+		$upit = 'SELECT * FROM pjesme';
+		foreach($veza->query($upit) as $red) {
+			$red = array($red['izvodjac'], $red['pjesma'], $red['mjesec']);
 			fputcsv($fp, $red, ',');
 		}
 		exit();
@@ -151,15 +247,15 @@
 		$tekst = htmlEntities($_POST['pretrazivanje'], ENT_QUOTES);
 		$tekst = preg_replace("#[^0-9a-zA-Z ščćžđŠČĆŽĐ]#i", "", $tekst);
 		if(strlen($tekst) > 0) {
-			$fajlovi = glob('pjesme-najbolje/*.xml');
+			$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+			$upit = 'SELECT * FROM najbolje';
 			$rezultati_pretrage = array();
-			foreach($fajlovi as $fajl) {
-				$xml = new SimpleXMLElement($fajl, 0, true);
-				if(stristr($xml->izvodjac, $tekst)){
-					$rezultati_pretrage[] = $xml->izvodjac;
+			foreach($veza->query($upit) as $red) {
+				if(stristr($red['izvodjac'], $tekst)){
+					$rezultati_pretrage[] = $red['izvodjac'];
 				}
-				if (stristr($xml->pjesma, $tekst)){
-					$rezultati_pretrage[] = $xml->pjesma;
+				if (stristr($red['pjesma'], $tekst)){
+					$rezultati_pretrage[] = $red['pjesma'];
 				}
 			}
 			$broj_rezultata = count($rezultati_pretrage);
@@ -229,15 +325,15 @@
 							<th>PJESMA</th>
 						</tr>
 						<?php
-							$fajlovi = glob('pjesme-najbolje/*.xml');
-							foreach($fajlovi as $fajl) {
-								$xml = new SimpleXMLElement($fajl, 0, true);
+							$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+							$upit = 'SELECT * FROM najbolje';
+							foreach($veza->query($upit) as $red) {
 								echo '<tr>';
-								echo '<td>'. htmlspecialchars($xml->ID, ENT_QUOTES, 'UTF-8') . '</td>';
-								echo '<td>'. htmlspecialchars($xml->izvodjac, ENT_QUOTES, 'UTF-8') . '</td>';
-								echo '<td>'. htmlspecialchars($xml->pjesma, ENT_QUOTES, 'UTF-8') . '</td>';
+								echo '<td>'. htmlspecialchars($red['id'], ENT_QUOTES, 'UTF-8') . '</td>';
+								echo '<td>'. htmlspecialchars($red['izvodjac'], ENT_QUOTES, 'UTF-8') . '</td>';
+								echo '<td>'. htmlspecialchars($red['pjesma'], ENT_QUOTES, 'UTF-8') . '</td>';
 								if(stristr($_SESSION['username'], "admin")){
-									echo '<td><form action = "" method = "POST"><input type = "hidden" name = "xkaodelete" value = "' . $xml->ID. '"/><input type = "submit" name = "izbrisi" value = "X" style = "width: 20px;"/></form></td>';
+									echo '<td><form action = "" method = "POST"><input type = "hidden" name = "xkaodelete" value = "' . $red['id']. '"/><input type = "submit" name = "izbrisi" value = "X" style = "width: 20px;"/></form></td>';
 								}
 								echo '</tr>';
 							}
@@ -258,12 +354,12 @@
 							}
 							
 							if(isset($_POST['napravi_izmjene'])){
-								$fajlovi = glob('pjesme-najbolje/*.xml');
+								$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+								$upit = 'SELECT * FROM najbolje';
 								$bul = true;
 								$bezGreske1 = true;
-								foreach($fajlovi as $fajl) {
-									$xml = new SimpleXMLElement($fajl, 0, true);
-									if($xml->ID == $_POST['izmjena_ID']){
+								foreach($veza->query($upit) as $red) {
+									if($red['id'] == $_POST['izmjena_ID']){
 										$ID_d = $_POST['izmjena_ID'];
 										$izvodjac_d = htmlEntities($_POST['novi_izvodjac'], ENT_QUOTES);
 										$izvodjac_d = preg_replace("#[^0-9a-zA-Z ščćžđŠČĆŽĐ]#i", "", $izvodjac_d);
@@ -281,13 +377,11 @@
 										}
 										$bul = false;
 										if($bezGreske1){
-											$fajl1 = "pjesme-najbolje/" . $ID_d . ".xml";
-											unlink($fajl1);
-											$xml = new SimpleXMLElement('<?xml version = "1.0" encoding = "utf-8"?><pjesma></pjesma>');
-											$xml->addChild('ID', $ID_d);
-											$xml->addChild('izvodjac', $izvodjac_d);
-											$xml->addChild('pjesma', $pjesma_d);
-											$xml->asXML('pjesme-najbolje/' . $ID_d . '.xml');
+											$upit1 = $veza->prepare("UPDATE najbolje SET izvodjac=?, pjesma=? WHERE id=?");
+											$upit1->bindValue(1, $izvodjac_d, PDO::PARAM_STR);
+											$upit1->bindValue(2, $pjesma_d, PDO::PARAM_STR);
+											$upit1->bindValue(3, $ID_d, PDO::PARAM_INT);
+											$upit1->execute();
 											echo "<meta http-equiv = 'refresh' content = '0'>";
 										}
 									}
@@ -298,11 +392,11 @@
 							}
 							
 							if(isset($_POST['dodaj'])){
-								$fajlovi = glob('pjesme-najbolje/*.xml');
+								$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+								$upit = 'SELECT * FROM najbolje';
 								$bul = true;
-								foreach($fajlovi as $fajl) {
-									$xml1 = new SimpleXMLElement($fajl, 0, true);
-									if($xml1->ID == $_POST['IDdodaj']){
+								foreach($veza->query($upit) as $red) {
+									if($red['id'] == $_POST['IDdodaj']){
 										$bul = false;
 									}
 								}
@@ -330,11 +424,43 @@
 										$bezGreske2 = false;
 									}
 									if($bezGreske2){
-										$xml = new SimpleXMLElement('<?xml version = "1.0" encoding = "utf-8"?><pjesma></pjesma>');
-										$xml->addChild('ID', $ID_d);
-										$xml->addChild('izvodjac', $izvodjac_d);
-										$xml->addChild('pjesma', $pjesma_d);
-										$xml->asXML('pjesme-najbolje/' . $ID_d . '.xml');
+										$traziKorisnika = "SELECT * FROM korisnici where username = 'admin'";
+										$server = "localhost";
+										$korisnik = "remorker7";
+										$pass = "balasevizam7";
+										$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
+										mysqli_set_charset($veza, 'utf8');
+										if (!$veza) {
+											die("Connection failed: " . mysqli_connect_error());
+										}
+										$korisnik = 'N/A';
+										$izvrsi = $veza->query($traziKorisnika);
+										if($izvrsi->num_rows > 0) {
+											$rez = mysqli_fetch_row($izvrsi);
+											$korisnik = $rez[0];
+										}
+										$pjesmafk = -1;
+										$traziFK = "SELECT * FROM pjesme where izvodjac = '$izvodjac_d' and pjesma = '$pjesma_d'";
+										$izvrsi = $veza->query($traziFK);
+										if($izvrsi->num_rows > 0) {
+											$rez = mysqli_fetch_row($izvrsi);
+											$pjesmafk = $rez[0];
+										}
+										
+										if($pjesmafk != -1) {
+											$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+											VALUES ('$ID_d', '$izvodjac_d', '$pjesma_d', '$korisnik', '$pjesmafk')";
+										}
+										else{
+											$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+											VALUES ('$ID_d', '$izvodjac_d', '$pjesma_d', '$korisnik', DEFAULT)";
+										} 
+										if (mysqli_query($veza, $upit)) {
+											echo "";
+										}
+										else {
+											echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+										}
 										echo "<meta http-equiv = 'refresh' content = '0'>";
 									}
 								}
@@ -345,8 +471,10 @@
 					
 							if(isset($_POST['izbrisi'])){
 								$ID_i = $_POST['xkaodelete'];
-								$fajl = "pjesme-najbolje/" . $ID_i . ".xml";
-								unlink($fajl);
+								$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+								$upit = $veza->prepare("DELETE FROM najbolje WHERE id=?");
+								$upit->bindValue(1, $ID_i, PDO::PARAM_STR);
+								$upit->execute();
 								echo "<meta http-equiv = 'refresh' content = '0'>";
 							}
 						?>
@@ -404,6 +532,13 @@
 						</tr>
 					</table>
 					<script src = "js/validacija_pocetna.js"></script>
+				</form>
+				<form method = "post" class = "forma-pocetna" name = "forma-prebacivanje" action = "">
+					<?php
+						if(stristr($_SESSION['username'], "admin")){
+							echo '<p class = "citati"><input name = "XMLtoDB" type = "submit" value = "Prebaci podatke iz XML-a u bazu podataka"></p>';
+						}
+					?>
 				</form>
 				<form method = "post" class = "forma-pocetna" name = "forma-preuzimanje" action = "">
 					<?php

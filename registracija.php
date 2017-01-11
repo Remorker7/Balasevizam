@@ -7,7 +7,20 @@
 		$email = htmlEntities($_POST['email'], ENT_QUOTES);
 		$password = htmlEntities($_POST['password'], ENT_QUOTES);
 		$c_password = htmlEntities($_POST['c_password'], ENT_QUOTES);
-		if(file_exists('korisnici/' . $username . '.xml')){ $greske[] = 'Username već postoji'; }
+		$server = "localhost";
+		$korisnik = "remorker7";
+		$pass = "balasevizam7";
+		$baza = "balasevizam";
+		$veza = mysqli_connect($server, $korisnik, $pass, $baza);
+		mysqli_set_charset($veza, 'utf8');
+		if (!$veza) {
+			die("Connection failed: " . mysqli_connect_error());
+		}
+		$upit = "SELECT * FROM korisnici where username = '$username'";
+		$rezultat = $veza->query($upit);
+		if ($rezultat->num_rows > 0){
+			$greske[] = 'Username već postoji';
+		}
 		if($username == ''){ $greske[] = 'Niste unijeli username'; }
 		if($email == ''){ $greske[] = 'Niste unijeli email'; }
 		if($password == '' || $c_password == ''){ $greske[] = 'Niste unijeli password'; }
@@ -18,11 +31,15 @@
 		if (!preg_match("/^[a-zA-Z0-9 ščćžđŠČĆŽĐ]*$/", $username)) { $greske[] = 'Username može sadržati samo slova i brojeve'; }
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { $greske[] = "Neispravan format e-maila"; }
 		if(count($greske) == 0){
-			$xml = new SimpleXMLElement('<?xml version = "1.0" encoding = "utf-8"?><user></user>');
-			$xml->addChild('username', $username);
-			$xml->addChild('password', md5($password));
-			$xml->addChild('email', $email);
-			$xml->asXML('korisnici/' . $username . '.xml');
+			$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+			$upit = "INSERT INTO korisnici (username, password, email)
+			VALUES ('$username', 'md5($password)', '$email')";
+			if (mysqli_query($veza, $upit)) {
+				echo "Upit uspješno izvršen!";
+			}
+			else {
+				echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+			}
 			header('Location: index.php');
 			die;
 		}

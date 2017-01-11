@@ -1,6 +1,17 @@
 <?php
 	session_start();
-	if(!file_exists('korisnici/' . $_SESSION['username'] . '.xml')){
+	$server = "localhost";
+	$korisnik = "remorker7";
+	$pass = "balasevizam7";
+	$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
+	mysqli_set_charset($veza, 'utf8');
+	if (!$veza) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	$koJe = $_SESSION['username'];
+	$upit = "SELECT * FROM korisnici where username = '$koJe'";
+	$rezultat = $veza->query($upit);
+	if ($rezultat->num_rows < 1){
 		header('Location: index.php');
 		die;
 	}

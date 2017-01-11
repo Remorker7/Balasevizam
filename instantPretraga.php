@@ -1,26 +1,26 @@
 <?php
 	$tekst = $_GET["q"];
-	$fajlovi = glob('pjesme-najbolje/*.xml');
+	$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+	$upit = 'SELECT * FROM najbolje';
 	if (strlen($tekst) > 0) {
 		$ispis = "";
 		$doDeset = 0;
-		foreach($fajlovi as $fajl) {
-			$xml = new SimpleXMLElement($fajl, 0, true);
-			if(stristr($xml->izvodjac, $tekst)){
+		foreach($veza->query($upit) as $red) {
+			if(stristr($red['izvodjac'], $tekst)){
 				if ($ispis == "") {
-					$ispis = $xml->izvodjac;
+					$ispis = $red['izvodjac'];
 				}
 				else {
-				  $ispis = $ispis . "<br/>" . $xml->izvodjac;
+				  $ispis = $ispis . "<br/>" . $red['izvodjac'];
 				}
 				$doDeset++;
 			}
-			if($doDeset < 10 && stristr($xml->pjesma, $tekst)){
+			if($doDeset < 10 && stristr($red['pjesma'], $tekst)){
 				if ($ispis == "") {
-					$ispis = $xml->pjesma;
+					$ispis = $red['pjesma'];
 				}
 				else {
-				  $ispis = $ispis . "<br/>" . $xml->pjesma;
+				  $ispis = $ispis . "<br/>" . $red['pjesma'];
 				}
 				$doDeset++;
 			}
