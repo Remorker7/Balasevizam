@@ -1,17 +1,12 @@
 <?php
 	session_start();
-	$server = "localhost";
-	$korisnik = "remorker7";
-	$pass = "balasevizam7";
-	$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
-	mysqli_set_charset($veza, 'utf8');
-	if (!$veza) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
+	$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+	$veza->exec("set names utf8");
 	$koJe = $_SESSION['username'];
-	$upit = "SELECT * FROM korisnici where username = '$koJe'";
-	$rezultat = $veza->query($upit);
-	if ($rezultat->num_rows < 1){
+	$rezultat = $veza->prepare("SELECT * FROM korisnici where username = '$koJe'");
+	$rezultat->execute();
+	$broj = $rezultat->rowCount();
+	if ($broj < 1){
 		header('Location: index.php');
 		die;
 	}

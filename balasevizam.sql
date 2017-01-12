@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2017 at 05:07 PM
+-- Generation Time: Jan 12, 2017 at 05:31 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -59,11 +59,11 @@ CREATE TABLE `najbolje` (
 --
 
 INSERT INTO `najbolje` (`id`, `izvodjac`, `pjesma`, `korisnik`, `pjesmafk`) VALUES
-(2, 'Elliot Smith', 'Between the bars', 'admin', NULL),
 (4, 'Azra', 'Jablan', 'admin', NULL),
-(6, 'Coldplay', 'Paradise', 'admin', NULL),
+(5, 'Bijelo dugme', 'Evo zakleću se', 'admin', NULL),
+(6, 'Babe', 'Ko me tero', 'admin', 23),
 (8, 'Yu grupa', 'Crni leptir', 'admin', NULL),
-(9, 'COD', 'Deni', 'admin', 17),
+(11, 'COD', 'Deni', 'admin', 24),
 (77, 'Alisa', 'Naše su zvijezde veće', 'admin', NULL),
 (90, 'Crvena jabuka', 'Bježi kišo s prozora', 'admin', NULL);
 
@@ -85,12 +85,12 @@ CREATE TABLE `pjesme` (
 --
 
 INSERT INTO `pjesme` (`id`, `izvodjac`, `pjesma`, `mjesec`) VALUES
-(3, 'Metallica', 'Ne volim januar', 'ma'),
-(5, 'Babe', 'Ko me tero', 'juli'),
-(14, 'Đorđe Balašević', 'Ne volim januar', 'decembar'),
-(15, 'Yu grupa', 'Dunavom još šibaju vetrovi', 'decembar'),
-(16, 'Đorđe Balašević', 'Ne volim januar', 'januar'),
-(17, 'COD', 'Deni', 'august');
+(19, 'Đorđe Balašević', 'Ne volim januar', 'decembar'),
+(20, 'Yu grupa', 'Dunavom još šibaju vetrovi', 'decembar'),
+(21, 'Metallica', 'Ne volim januar', 'ma'),
+(22, 'Đorđe Balašević', 'Ne volim januar', 'januar'),
+(23, 'Babe', 'Ko me tero', 'juli'),
+(24, 'COD', 'Deni', 'august');
 
 --
 -- Indexes for dumped tables
@@ -124,7 +124,7 @@ ALTER TABLE `pjesme`
 -- AUTO_INCREMENT for table `pjesme`
 --
 ALTER TABLE `pjesme`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- Constraints for dumped tables
 --

@@ -7,8 +7,8 @@
 
 	function rest_get($request, $data){ 
 		$var = $_GET['id'];
-		$veza = new PDO('mysql:host=localhost; dbname=balasevizam', 'remorker7', 'balasevizam7');
-        $veza->exec("set names utf8");
+		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza->exec("set names utf8");
         $upit = $veza->prepare("SELECT * FROM najbolje WHERE id=?");
         $upit->bindValue(1, $var, PDO::PARAM_INT);
         $upit->execute();

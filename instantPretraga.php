@@ -1,6 +1,7 @@
 <?php
 	$tekst = $_GET["q"];
-	$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+	$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+	$veza->exec("set names utf8");
 	$upit = 'SELECT * FROM najbolje';
 	if (strlen($tekst) > 0) {
 		$ispis = "";

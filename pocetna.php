@@ -26,9 +26,11 @@
 		$pdf->Cell(50, 10, "Najbolje pjesme ovog mjeseca su: ", 0, 1);
 		$pdf->SetFont("Arial", "", 12);
 		
-		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
-		$upit = 'SELECT * FROM najbolje';
-		foreach($veza->query($upit) as $red) {
+		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza->exec("set names utf8");
+		$rezultat = $veza->prepare("SELECT * FROM najbolje");
+		$rezultat->execute();
+		foreach($rezultat as $red) {
 			$pdf->Cell(30, 10, "ID", 1, 0);
 			$pdf->Cell(150, 10, $red['id'], 1, 1);
 			$tekst = $red['izvodjac'];
@@ -51,9 +53,9 @@
 		$pdf->Cell(50, 10, $tekst, 0, 1);
 		$pdf->SetFont("Arial", "", 12);
 		
-		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
-		$upit = 'SELECT * FROM pjesme';
-		foreach($veza->query($upit) as $red) {
+		$rezultat = $veza->prepare("SELECT * FROM pjesme");
+		$rezultat->execute();
+		foreach($rezultat as $red) {
 			$tekst = $red['izvodjac'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
@@ -76,9 +78,9 @@
 		$pdf->Cell(50, 10, "Registrovani korisnici su: ", 0, 1);
 		$pdf->SetFont("Arial", "", 12);
 		
-		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
-		$upit = 'SELECT * FROM korisnici';
-		foreach($veza->query($upit) as $red) {
+		$rezultat = $veza->prepare("SELECT * FROM korisnici");
+		$rezultat->execute();
+		foreach($rezultat as $red) {
 			$tekst = $red['username'];
 			$tekst = barbarskiNacin($tekst);
 			$tekst = urldecode($tekst);
@@ -88,21 +90,17 @@
 	}
 	
 	session_start();
-	$server = "localhost";
-	$korisnik = "remorker7";
-	$pass = "balasevizam7";
-	$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
-	mysqli_set_charset($veza, 'utf8');
-	if (!$veza) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
+	$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+	$veza->exec("set names utf8");
 	$koJe = $_SESSION['username'];
-	$upit = "SELECT * FROM korisnici where username = '$koJe'";
-	$rezultat = $veza->query($upit);
-	if ($rezultat->num_rows < 1){
+	$rezultat = $veza->prepare("SELECT * FROM korisnici where username = '$koJe'");
+	$rezultat->execute();
+	$broj = $rezultat->rowCount();
+	if ($broj < 1){
 		header('Location: index.php');
 		die;
 	}
+
 	if(isset($_POST['XMLtoDB'])){
 		$fajlovi = glob('korisnici/*.xml');
 		foreach($fajlovi as $fajl) {
@@ -111,17 +109,13 @@
 			$password = $xml->password;
 			$email = $xml->email;
 			
-			$provjeraDuplih = "SELECT * FROM korisnici where username = '$username'";
-			$rezultat = $veza->query($provjeraDuplih);
-			if ($rezultat->num_rows < 1){
-				$upit = "INSERT INTO korisnici (username, password, email)
-				VALUES ('$username', '$password', '$email')";
-				if (mysqli_query($veza, $upit)) {
-					echo "";
-				}
-				else {
-					echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
-				}
+			$rezultat = $veza->prepare("SELECT * FROM korisnici where username = '$username'");
+			$rezultat->execute();
+			$broj = $rezultat->rowCount();
+			if ($broj < 1){
+				$rezultat = $veza->prepare("INSERT INTO korisnici (username, password, email)
+				VALUES ('$username', '$password', '$email')");
+				$rezultat->execute();
 			}
 		}
 		
@@ -131,17 +125,13 @@
 			$izvodjac = $xml->izvodjac;
 			$pjesma = $xml->pjesma;
 			$mjesec = $xml->mjesec;
-			$provjeraDuplih = "SELECT * FROM pjesme where izvodjac = '$izvodjac' and pjesma = '$pjesma' and mjesec = '$mjesec'";
-			$rezultat = $veza->query($provjeraDuplih);
-			if ($rezultat->num_rows < 1){
-				$upit = "INSERT INTO pjesme (id, izvodjac, pjesma, mjesec)
-				VALUES (DEFAULT, '$izvodjac', '$pjesma', '$mjesec')";
-				if (mysqli_query($veza, $upit)) {
-					echo "";
-				}
-				else {
-					echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
-				}
+			$rezultat = $veza->prepare("SELECT * FROM pjesme where izvodjac = '$izvodjac' and pjesma = '$pjesma' and mjesec = '$mjesec'");
+			$rezultat->execute();
+			$broj = $rezultat->rowCount();
+			if ($broj < 1){
+				$rezultat = $veza->prepare("INSERT INTO pjesme (id, izvodjac, pjesma, mjesec)
+				VALUES (DEFAULT, '$izvodjac', '$pjesma', '$mjesec')");
+				$rezultat->execute();
 			}
 		}
 		
@@ -152,35 +142,34 @@
 			$izvodjac = $xml->izvodjac;
 			$pjesma = $xml->pjesma;
 			$korisnik = 'N/A';
-			$traziKorisnika = "SELECT * FROM korisnici where username = 'admin'";
-			$izvrsi = $veza->query($traziKorisnika);
-			if($izvrsi->num_rows > 0) {
-				$rez = mysqli_fetch_row($izvrsi);
-				$korisnik = $rez[0];
+			$rezultat = $veza->prepare("SELECT * FROM korisnici where username = 'admin'");
+			$rezultat->execute();
+			$broj = $rezultat->rowCount();
+			if($broj > 0) {
+				$rez = $rezultat->fetch(PDO::FETCH_OBJ);
+				$korisnik = $rez->username;
 			}
 			$pjesmafk = -1;
-			$traziFK = "SELECT * FROM pjesme where izvodjac = '$izvodjac' and pjesma = '$pjesma'";
-			$izvrsi = $veza->query($traziFK);
-			if($izvrsi->num_rows > 0) {
-				$rez = mysqli_fetch_row($izvrsi);
-				$pjesmafk = $rez[0];
+			$rezultat = $veza->prepare("SELECT * FROM pjesme where izvodjac = '$izvodjac' and pjesma = '$pjesma'");
+			$rezultat->execute();
+			$broj = $rezultat->rowCount();
+			if($broj > 0) {
+				$rez = $rezultat->fetch(PDO::FETCH_OBJ);
+				$pjesmafk = $rez->id;
 			}
-			$provjeraDuplih = "SELECT * FROM pjesme where id = '$ID'";
-			$rezultat = $veza->query($provjeraDuplih);
-			if ($rezultat->num_rows < 1){
+			$rezultat = $veza->prepare("SELECT * FROM pjesme where id = '$ID'");
+			$rezultat->execute();
+			$broj = $rezultat->rowCount();
+			if ($broj < 1){
 				if($pjesmafk != -1) {
-					$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
-					VALUES ('$ID', '$izvodjac', '$pjesma', '$korisnik', '$pjesmafk')";
+					$rezultat = $veza->prepare("INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+					VALUES ('$ID', '$izvodjac', '$pjesma', '$korisnik', '$pjesmafk')");
+					$rezultat->execute();
 				}
 				else{
-					$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
-					VALUES ('$ID', '$izvodjac', '$pjesma', '$korisnik', DEFAULT)";
-				} 
-				if (mysqli_query($veza, $upit)) {
-					echo "";
-				}
-				else {
-					echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
+					$rezultat = $veza->prepare("INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+					VALUES ('$ID', '$izvodjac', '$pjesma', '$korisnik', DEFAULT)");
+					$rezultat->execute();
 				}
 			}
 		}
@@ -215,14 +204,9 @@
 			$bezGreske = false;
 		}
 		if($bezGreske){
-			$upit = "INSERT INTO pjesme (id, izvodjac, pjesma, mjesec)
-			VALUES (DEFAULT, '$izvodjac', '$pjesma', '$mjesec')";
-			if (mysqli_query($veza, $upit)) {
-				echo "";
-			}
-			else {
-				echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
-			}
+			$rezultat = $veza->prepare("INSERT INTO pjesme (id, izvodjac, pjesma, mjesec)
+			VALUES (DEFAULT, '$izvodjac', '$pjesma', '$mjesec')");
+			$rezultat->execute();
 			header('Location: pocetna.php');
 			die;
 		}
@@ -233,7 +217,8 @@
 		header('Content-Type: text/csv; charset = utf-8');
 		header('Content-Disposition: attachment; filename = pjesme.csv');
 		$fp = fopen('php://output', 'w');
-		$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza->exec("set names utf8");
 		$upit = 'SELECT * FROM pjesme';
 		foreach($veza->query($upit) as $red) {
 			$red = array($red['izvodjac'], $red['pjesma'], $red['mjesec']);
@@ -247,7 +232,8 @@
 		$tekst = htmlEntities($_POST['pretrazivanje'], ENT_QUOTES);
 		$tekst = preg_replace("#[^0-9a-zA-Z ščćžđŠČĆŽĐ]#i", "", $tekst);
 		if(strlen($tekst) > 0) {
-			$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+			$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+			$veza->exec("set names utf8");
 			$upit = 'SELECT * FROM najbolje';
 			$rezultati_pretrage = array();
 			foreach($veza->query($upit) as $red) {
@@ -325,7 +311,8 @@
 							<th>PJESMA</th>
 						</tr>
 						<?php
-							$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+							$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+							$veza->exec("set names utf8");
 							$upit = 'SELECT * FROM najbolje';
 							foreach($veza->query($upit) as $red) {
 								echo '<tr>';
@@ -354,7 +341,8 @@
 							}
 							
 							if(isset($_POST['napravi_izmjene'])){
-								$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+								$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+								$veza->exec("set names utf8");
 								$upit = 'SELECT * FROM najbolje';
 								$bul = true;
 								$bezGreske1 = true;
@@ -376,12 +364,32 @@
 											$bezGreske1 = false;
 										}
 										$bul = false;
+										$pjesmafk = -1;
+										$rezultat = $veza->prepare("SELECT * FROM pjesme where izvodjac = '$izvodjac_d' and pjesma = '$pjesma_d'");
+										$rezultat->execute();
+										$broj = $rezultat->rowCount();
+										if($broj > 0) {
+											$rez = $rezultat->fetch(PDO::FETCH_OBJ);
+											$pjesmafk = $rez->id;
+										}
+										$korisnik = "admin";
 										if($bezGreske1){
-											$upit1 = $veza->prepare("UPDATE najbolje SET izvodjac=?, pjesma=? WHERE id=?");
-											$upit1->bindValue(1, $izvodjac_d, PDO::PARAM_STR);
-											$upit1->bindValue(2, $pjesma_d, PDO::PARAM_STR);
-											$upit1->bindValue(3, $ID_d, PDO::PARAM_INT);
-											$upit1->execute();
+											if($pjesmafk != -1) {
+												$upit1 = $veza->prepare("UPDATE najbolje SET izvodjac=?, pjesma=?, korisnik=?, pjesmafk=? WHERE id=?");
+												$upit1->bindValue(1, $izvodjac_d, PDO::PARAM_STR);
+												$upit1->bindValue(2, $pjesma_d, PDO::PARAM_STR);
+												$upit1->bindValue(3, $korisnik, PDO::PARAM_STR);
+												$upit1->bindValue(4, $pjesmafk, PDO::PARAM_INT);
+												$upit1->bindValue(5, $ID_d, PDO::PARAM_INT);
+												$upit1->execute();
+											}
+											else{
+												$upit1 = $veza->prepare("UPDATE najbolje SET izvodjac=?, pjesma=? WHERE id=?");
+												$upit1->bindValue(1, $izvodjac_d, PDO::PARAM_STR);
+												$upit1->bindValue(2, $pjesma_d, PDO::PARAM_STR);
+												$upit1->bindValue(3, $ID_d, PDO::PARAM_INT);
+												$upit1->execute();
+											}
 											echo "<meta http-equiv = 'refresh' content = '0'>";
 										}
 									}
@@ -392,7 +400,8 @@
 							}
 							
 							if(isset($_POST['dodaj'])){
-								$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+								$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+								$veza->exec("set names utf8");
 								$upit = 'SELECT * FROM najbolje';
 								$bul = true;
 								foreach($veza->query($upit) as $red) {
@@ -424,54 +433,48 @@
 										$bezGreske2 = false;
 									}
 									if($bezGreske2){
-										$traziKorisnika = "SELECT * FROM korisnici where username = 'admin'";
-										$server = "localhost";
-										$korisnik = "remorker7";
-										$pass = "balasevizam7";
-										$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
-										mysqli_set_charset($veza, 'utf8');
-										if (!$veza) {
-											die("Connection failed: " . mysqli_connect_error());
-										}
 										$korisnik = 'N/A';
-										$izvrsi = $veza->query($traziKorisnika);
-										if($izvrsi->num_rows > 0) {
-											$rez = mysqli_fetch_row($izvrsi);
-											$korisnik = $rez[0];
+										$rezultat = $veza->prepare("SELECT * FROM korisnici where username = 'admin'");
+										$rezultat->execute();
+										$broj = $rezultat->rowCount();
+										if($broj > 0) {
+											$rez = $rezultat->fetch(PDO::FETCH_OBJ);
+											$korisnik = $rez->username;
 										}
 										$pjesmafk = -1;
-										$traziFK = "SELECT * FROM pjesme where izvodjac = '$izvodjac_d' and pjesma = '$pjesma_d'";
-										$izvrsi = $veza->query($traziFK);
-										if($izvrsi->num_rows > 0) {
-											$rez = mysqli_fetch_row($izvrsi);
-											$pjesmafk = $rez[0];
+										$rezultat = $veza->prepare("SELECT * FROM pjesme where izvodjac = '$izvodjac_d' and pjesma = '$pjesma_d'");
+										$rezultat->execute();
+										$broj = $rezultat->rowCount();
+										if($broj > 0) {
+											$rez = $rezultat->fetch(PDO::FETCH_OBJ);
+											$pjesmafk = $rez->id;
 										}
-										
-										if($pjesmafk != -1) {
-											$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
-											VALUES ('$ID_d', '$izvodjac_d', '$pjesma_d', '$korisnik', '$pjesmafk')";
+										$rezultat = $veza->prepare("SELECT * FROM pjesme where id = '$ID'");
+										$rezultat->execute();
+										$broj = $rezultat->rowCount();
+										if ($broj < 1){
+											if($pjesmafk != -1) {
+												$rezultat = $veza->prepare("INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+												VALUES ('$ID_d', '$izvodjac_d', '$pjesma_d', '$korisnik', '$pjesmafk')");
+												$rezultat->execute();
+											}
+											else{
+												$rezultat = $veza->prepare("INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
+												VALUES ('$ID_d', '$izvodjac_d', '$pjesma_d', '$korisnik', DEFAULT)");
+												$rezultat->execute();
+											}
 										}
-										else{
-											$upit = "INSERT INTO najbolje (id, izvodjac, pjesma, korisnik, pjesmafk)
-											VALUES ('$ID_d', '$izvodjac_d', '$pjesma_d', '$korisnik', DEFAULT)";
-										} 
-										if (mysqli_query($veza, $upit)) {
-											echo "";
-										}
-										else {
-											echo "Greška: " . $upit . "<br>" . mysqli_error($veza);
-										}
-										echo "<meta http-equiv = 'refresh' content = '0'>";
 									}
+									echo "<meta http-equiv = 'refresh' content = '0'>";
 								}
 								else {
 									$greske_dodavanje[] = "Već postoji pjesma sa unešenim ID-om. ID mora biti jedinstven.";
 								}
 							}
-					
 							if(isset($_POST['izbrisi'])){
 								$ID_i = $_POST['xkaodelete'];
-								$veza = new PDO("mysql:dbname=balasevizam; host=localhost; charset=utf8", "remorker7", "balasevizam7");
+								$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+								$veza->exec("set names utf8");
 								$upit = $veza->prepare("DELETE FROM najbolje WHERE id=?");
 								$upit->bindValue(1, $ID_i, PDO::PARAM_STR);
 								$upit->execute();

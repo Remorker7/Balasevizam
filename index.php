@@ -1,20 +1,19 @@
 <?php
+
 	$greska = false;
 	if(isset($_POST['login'])){
 		$username = htmlEntities($_POST['username'], ENT_QUOTES);
 		$username = preg_replace('/[^A-Za-z0-9 ščćžđŠČĆŽĐ]/', '', $username);
 		$password = md5($_POST['password']);
-		$server = "localhost";
-		$korisnik = "remorker7";
-		$pass = "balasevizam7";
-		$baza = "balasevizam";$veza = mysqli_connect($server, $korisnik, $pass, $baza);
-		mysqli_set_charset($veza, 'utf8');
-		if (!$veza) {
-			die("Connection failed: " . mysqli_connect_error());
-		}
-		$upit = "SELECT * FROM korisnici where username = '$username'";
-		foreach($veza->query($upit) as $red) {
-			if($password == $red['password']){
+		session_start();
+		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza->exec("set names utf8");
+		$rezultat = $veza->prepare("SELECT * FROM korisnici where username = '$username'");
+		$rezultat->execute();
+		$broj = $rezultat->rowCount();
+		if ($broj > 0){
+			$red = $rezultat->fetch(PDO::FETCH_OBJ);
+			if($password == $red->password){
 				session_start();
 				$_SESSION['username'] = $username;
 				header('Location: pocetna.php');
