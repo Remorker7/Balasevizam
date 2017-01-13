@@ -26,7 +26,7 @@
 		$pdf->Cell(50, 10, "Najbolje pjesme ovog mjeseca su: ", 0, 1);
 		$pdf->SetFont("Arial", "", 12);
 		
-		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 		$veza->exec("set names utf8");
 		$rezultat = $veza->prepare("SELECT * FROM najbolje");
 		$rezultat->execute();
@@ -90,7 +90,7 @@
 	}
 	
 	session_start();
-	$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+	$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 	$veza->exec("set names utf8");
 	$koJe = $_SESSION['username'];
 	$rezultat = $veza->prepare("SELECT * FROM korisnici where username = '$koJe'");
@@ -217,7 +217,7 @@
 		header('Content-Type: text/csv; charset = utf-8');
 		header('Content-Disposition: attachment; filename = pjesme.csv');
 		$fp = fopen('php://output', 'w');
-		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 		$veza->exec("set names utf8");
 		$upit = 'SELECT * FROM pjesme';
 		foreach($veza->query($upit) as $red) {
@@ -232,7 +232,7 @@
 		$tekst = htmlEntities($_POST['pretrazivanje'], ENT_QUOTES);
 		$tekst = preg_replace("#[^0-9a-zA-Z ščćžđŠČĆŽĐ]#i", "", $tekst);
 		if(strlen($tekst) > 0) {
-			$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+			$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 			$veza->exec("set names utf8");
 			$upit = 'SELECT * FROM najbolje';
 			$rezultati_pretrage = array();
@@ -311,7 +311,7 @@
 							<th>PJESMA</th>
 						</tr>
 						<?php
-							$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+							$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 							$veza->exec("set names utf8");
 							$upit = 'SELECT * FROM najbolje';
 							foreach($veza->query($upit) as $red) {
@@ -341,7 +341,7 @@
 							}
 							
 							if(isset($_POST['napravi_izmjene'])){
-								$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+								$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 								$veza->exec("set names utf8");
 								$upit = 'SELECT * FROM najbolje';
 								$bul = true;
@@ -400,7 +400,7 @@
 							}
 							
 							if(isset($_POST['dodaj'])){
-								$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+								$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 								$veza->exec("set names utf8");
 								$upit = 'SELECT * FROM najbolje';
 								$bul = true;
@@ -473,7 +473,7 @@
 							}
 							if(isset($_POST['izbrisi'])){
 								$ID_i = $_POST['xkaodelete'];
-								$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+								$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 								$veza->exec("set names utf8");
 								$upit = $veza->prepare("DELETE FROM najbolje WHERE id=?");
 								$upit->bindValue(1, $ID_i, PDO::PARAM_STR);
