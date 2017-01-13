@@ -6,7 +6,7 @@
 		$username = preg_replace('/[^A-Za-z0-9 ščćžđŠČĆŽĐ]/', '', $username);
 		$password = md5($_POST['password']);
 		session_start();
-		$veza = new PDO('mysql:host=127.0.0.1;port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
+		$veza = new PDO('mysql:host=' . getenv('MYSQL_SERVICE_HOST') . ';port=3306;dbname=balasevizam', 'remorker7', 'balasevizam7');
 		$veza->exec("set names utf8");
 		$rezultat = $veza->prepare("SELECT * FROM korisnici where username = '$username'");
 		$rezultat->execute();
